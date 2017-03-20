@@ -103,6 +103,10 @@ namespace MuonTdaq
 
         public class T1boardIdentifier
         {
+            // test code
+            private int aiueo = 700;
+            private int aaaaa;
+            //
             public int[] delayChannelConvertTable;
             public int[] fpgaChannelConvertTable;
 
