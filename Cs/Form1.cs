@@ -141,67 +141,20 @@ namespace Cs_DL_Analysis_Form
             ChannelFilter.setValidChannels(validChs);
 
             DelayTimeConverter dtc = new DelayTimeConverter();
-            GeometricaIdentifier gid = new GeometricaIdentifier();
-            T1boardIdentifier t1id = new T1boardIdentifier();
+            TubePosition tubepos = new TubePosition();
 
-            int[] delayChannelConvertTable = { -1, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
-            t1id.setDelayChannelConvertTable( delayChannelConvertTable );
-            int[] fpgaChannelConvertTable = new int[64];
-            for (int i=0; i<fpgaChannelConvertTable.Length; i++)
-            {
-                /*
-                // for 1 Axis measurement 
-                switch (i)
-                {
-                    case 14:
-                        fpgaChannelConvertTable[i] = 4;
-                        break;
-                    case 16:
-                        fpgaChannelConvertTable[i] = 4;
-                        break;
-                    case 25:
-                        fpgaChannelConvertTable[i] = 12;
-                        break;
-                    case 27:
-                        fpgaChannelConvertTable[i] = 12;
-                        break;
-                    case 29:
-                        fpgaChannelConvertTable[i] = 20;
-                        break;
-                    case 31:
-                        fpgaChannelConvertTable[i] = 20;
-                        break;
-                    default:
-                        fpgaChannelConvertTable[i] = -1;
-                        break;
-                }
-                */
-                // 2 axis measurement
-                switch (i)
-                {
+            int[] t1DelayChannelTubeIndexMapper = { -1, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
+            tubepos.setT1BoardChannelMapper(t1DelayChannelTubeIndexMapper);
+            int[] moduleNumber2fpgaChannelMapper = new int[30];
+            // 2 axis measurement
+            moduleNumber2fpgaChannelMapper[0] = 14;
+            moduleNumber2fpgaChannelMapper[8] = 18;
+            moduleNumber2fpgaChannelMapper[16] = 25;
+            moduleNumber2fpgaChannelMapper[4] = 36;
+            moduleNumber2fpgaChannelMapper[12] = 40;
+            moduleNumber2fpgaChannelMapper[20] = 47;
 
-                    case 14:
-                        fpgaChannelConvertTable[i] = 0;
-                        break;
-                    case 16:
-                        fpgaChannelConvertTable[i] = 0;
-                        break;
-                    case 18:
-                        fpgaChannelConvertTable[i] = 8;
-                        break;
-                    case 20:
-                        fpgaChannelConvertTable[i] = 8;
-                        break;
-                    case 3:
-                        fpgaChannelConvertTable[i] = 0;
-                        break;
-                    default:
-                        fpgaChannelConvertTable[i] = -1;
-                        break;
-                }
-            }
-            t1id.setFpgaChannelConvertTable(fpgaChannelConvertTable);
-            
+            tubepos.setModuleHeadChannel(moduleNumber2fpgaChannelMapper);
 
             StreamWriter sw = new StreamWriter(Path.GetDirectoryName(filename) + Path.DirectorySeparatorChar + "out2_" + Path.GetFileName(filename));
 
@@ -234,8 +187,7 @@ namespace Cs_DL_Analysis_Form
                         MudSet tgSet = new MudSet(timeGroupe);
 
                         tgSet.delayTimeConv = dtc;
-                        tgSet.geomericaId   = gid;
-                        tgSet.t1boardId     = t1id;
+                        tgSet.tubePosition = tubepos;
 
                         if (calcDelayTimeCbx.Checked == true)
                         {

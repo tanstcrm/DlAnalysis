@@ -128,7 +128,7 @@
             this.validChTbx.Name = "validChTbx";
             this.validChTbx.Size = new System.Drawing.Size(321, 25);
             this.validChTbx.TabIndex = 7;
-            this.validChTbx.Text = "14,15,16,17,25,26,27,28,29,30,31,32";
+            this.validChTbx.Text = "14,15,16,17,18,19,20,21,25,26,27,28";
             this.validChTbx.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // vthCorrectionCbx

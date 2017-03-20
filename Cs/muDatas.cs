@@ -22,6 +22,7 @@ namespace Cs_DL_Analysis_Form
         public DelayTimeConverter delayTimeConv;
         public GeometricaIdentifier geomericaId;
         public T1boardIdentifier t1boardId;
+        public TubePosition tubePosition;
 
         MudSet() { }
         public MudSet(MuData[] datas)
@@ -229,13 +230,17 @@ namespace Cs_DL_Analysis_Form
                     break;
                 }
                 data.time = data.time - delayFromCh1[ch];
-
+                int geopos = tubePosition.calcGrandTubeIndex(ch, data.ch);
+                /*
                 if ( data.ch == 14 || data.ch == 25 || data.ch == 29) { ch += 12; }
                 int moduleNumber = t1boardId.fpgaChannel2ModuleNumber(data.ch);
                 int geoCh = t1boardId.boardChannel2GeometoricalBoardChannel(ch);
                 int geopos = geomericaId.calcGeometoricalChannel(moduleNumber, geoCh);
+                */
+
 
                 data.ch = geopos;
+                //data.ch = ch;
             }
             if (badDatasetFlg == true)
             {
