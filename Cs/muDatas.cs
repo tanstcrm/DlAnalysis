@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MuonTdaq.TubePosition;
+using MuonTdaq.DetectorGeometory;
 
 namespace Cs_DL_Analysis_Form
 {

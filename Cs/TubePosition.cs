@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MuonTdaq
 {
-    namespace TubePosition
+    namespace DetectorGeometory
     {
         /// <summary>
         /// DelayTimeTable has data to calcurate channel position from delay time.
@@ -91,6 +91,82 @@ namespace MuonTdaq
 
         }
 
+        public class TubePosition
+        {
+            private int TubeNumberPerModule = 24;
+            private int DelayChannelNumberPerT1 = 12;
+            //private bool t1BoardDirection = false;
+            private int[] moduleHeadFpgaChannel;
+            private List<TubePosOnT1Board> fpgaChannels2TubePosOnT1 = new List<TubePosOnT1Board>(70);
+
+            private int[] t1TubeOrderingMapper = { -1, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 };
+
+            /// <summary>
+            /// Set T1 board
+            /// </summary>
+            /// <param name="mapper"></param>
+            public void setT1BoardChannelMapper(int[] mapper )
+            {
+                t1TubeOrderingMapper = mapper;
+            }
+            /*
+            /// <summary>
+            /// Set direction of T1 board, True:Positive position, False:Reverse position
+            /// </summary>
+            /// <param name="direction"></param>
+            public void setT1BoardDirection(bool direction)
+            {
+                t1BoardDirection = direction;
+            }
+            */
+            public void setModuleHeadChannel(int[] headChannelTable)
+            {
+                moduleHeadFpgaChannel = headChannelTable;
+                for (int i = 0; i <= headChannelTable.Max() + 3; i++ )
+                {
+                    TubePosOnT1Board pos;
+                    pos.moduleNum = -1;
+                    pos.delayLineNum = -1;
+                    fpgaChannels2TubePosOnT1.Add(pos);
+                }
+                for(int i=0; i<headChannelTable.Length; i++)
+                {
+                    int lineAChannelIndex = headChannelTable[i];
+                    int lineBChannelIndex = headChannelTable[i] + 2;
+                    TubePosOnT1Board posLineA, posLineB;
+                    posLineA.moduleNum = i;
+                    posLineA.delayLineNum = 0;
+                    posLineB.moduleNum = i;
+                    posLineB.delayLineNum = 1;
+
+                    fpgaChannels2TubePosOnT1[lineAChannelIndex] = posLineA;
+                    fpgaChannels2TubePosOnT1[lineBChannelIndex] = posLineB;
+                    fpgaChannels2TubePosOnT1[lineAChannelIndex+1] = posLineA;
+                    fpgaChannels2TubePosOnT1[lineBChannelIndex+1] = posLineB;
+                }
+            }
+            public int calcGrandTubeIndex(int channelOfDelayLine, int fpgaChannel)
+            {
+                int t1LaneOffset = fpgaChannels2TubePosOnT1[fpgaChannel].delayLineNum * DelayChannelNumberPerT1;
+                int moduleOffset = fpgaChannels2TubePosOnT1[fpgaChannel].moduleNum    * TubeNumberPerModule;
+                int t1TubeIndexIndex = channelOfDelayLine + t1LaneOffset;
+                int t1TubeIndex = t1TubeOrderingMapper[t1TubeIndexIndex];
+                int grandTubeIndex = t1TubeIndexIndex + moduleOffset;
+
+                return grandTubeIndex;
+            }
+
+            private struct TubePosOnT1Board
+            {
+                public int delayLineNum;
+                public int moduleNum;
+            }
+        }
+
+
+
+
+
         public class GeometricaIdentifier
         {
             public int tubesPerModule = 24;
@@ -103,10 +179,6 @@ namespace MuonTdaq
 
         public class T1boardIdentifier
         {
-            // test code
-            private int aiueo = 700;
-            private int aaaaa;
-            //
             public int[] delayChannelConvertTable;
             public int[] fpgaChannelConvertTable;
 

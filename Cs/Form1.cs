@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MuonTdaq.TubePosition;
+using MuonTdaq.DetectorGeometory;
 
 namespace Cs_DL_Analysis_Form
 {
@@ -149,6 +149,8 @@ namespace Cs_DL_Analysis_Form
             int[] fpgaChannelConvertTable = new int[64];
             for (int i=0; i<fpgaChannelConvertTable.Length; i++)
             {
+                /*
+                // for 1 Axis measurement 
                 switch (i)
                 {
                     case 14:
@@ -168,6 +170,30 @@ namespace Cs_DL_Analysis_Form
                         break;
                     case 31:
                         fpgaChannelConvertTable[i] = 20;
+                        break;
+                    default:
+                        fpgaChannelConvertTable[i] = -1;
+                        break;
+                }
+                */
+                // 2 axis measurement
+                switch (i)
+                {
+
+                    case 14:
+                        fpgaChannelConvertTable[i] = 0;
+                        break;
+                    case 16:
+                        fpgaChannelConvertTable[i] = 0;
+                        break;
+                    case 18:
+                        fpgaChannelConvertTable[i] = 8;
+                        break;
+                    case 20:
+                        fpgaChannelConvertTable[i] = 8;
+                        break;
+                    case 3:
+                        fpgaChannelConvertTable[i] = 0;
                         break;
                     default:
                         fpgaChannelConvertTable[i] = -1;
