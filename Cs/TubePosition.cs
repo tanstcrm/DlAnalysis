@@ -139,6 +139,7 @@ namespace MuonTdaq
                     posLineB.moduleNum = i;
                     posLineB.delayLineNum = 1;
 
+
                     fpgaChannels2TubePosOnT1[lineAChannelIndex] = posLineA;
                     fpgaChannels2TubePosOnT1[lineBChannelIndex] = posLineB;
                     fpgaChannels2TubePosOnT1[lineAChannelIndex+1] = posLineA;
